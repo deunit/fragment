@@ -1,8 +1,5 @@
 import { error, type ServerLoad } from "@sveltejs/kit";
 import Post, { NotFoundError } from "$lib/models/post";
-import type { EntryGenerator } from "./$types";
-import { deta } from "$lib/db";
-import { env } from "$env/dynamic/private";
 
 export const load: ServerLoad = async (event) => {
     try {
@@ -11,7 +8,10 @@ export const load: ServerLoad = async (event) => {
         return { post };
     } catch (e) {
         if (e instanceof NotFoundError) {
-            throw error(404);
+            throw error(404, {
+                message: "Not Found",
+                code: 404
+            })
         } else {
             //@ts-ignore
             throw error(500, e.message);

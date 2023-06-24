@@ -2,7 +2,9 @@
 // for information about these interfaces
 declare global {
 	namespace App {
-		// interface Error {}
+		interface Error {
+			code?: number
+		}
 		interface Locals {
 			// getUserToken: ()=>Promise<string>
 		}
