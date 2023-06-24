@@ -2,4 +2,4 @@ import { env } from "$env/dynamic/private";
 import { Deta } from "deta";
 
 
-export const deta = Deta(env.DETA_PROJECT_KEY || "_")
+export const deta = Deta(env.DETA_PROJECT_KEY || env.DETA_KEY || "_")
