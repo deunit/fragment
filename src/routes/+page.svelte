@@ -1,6 +1,7 @@
 <script>
     import { browser } from "$app/environment";
-
+    import { page } from "$app/stores";
+    console.log($page.data);
 </script>
 
 

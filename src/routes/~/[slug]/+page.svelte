@@ -11,7 +11,7 @@
     export let data: PageServerData & PageData;
 </script>
 
-<div class="header">
+<div class="{style.header}">
     {#if data.isOwner}
         <div />
         <div>
@@ -33,10 +33,5 @@
         font-weight: 400;
     }
 
-    .header {
-        padding: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+   
 </style>

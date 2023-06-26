@@ -11,9 +11,8 @@
     import newEditor from "$lib/editor";
     import Dropdown from "$lib/components/dropdown.svelte";
     import style from "$lib/style/elements.module.scss";
-    import { page } from "$app/stores";
     import Loading from "$lib/components/loading.svelte";
-    import type { PageData, PageServerData } from "./$types";
+    import type { PageData } from "./$types";
     import type { Editor } from "typewriter-editor";
     import type { z } from "zod";
     import type Post from "$lib/models/post";

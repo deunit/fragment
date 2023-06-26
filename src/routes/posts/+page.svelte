@@ -3,6 +3,7 @@
     import Loading from "$lib/components/loading.svelte";
     import Icon from "$lib/icon.svelte";
     import type { PageData } from "./$types";
+    import style from '$lib/style/elements.module.scss'
 
     let loading = false;
     export let data: PageData;
@@ -10,7 +11,18 @@
 
 <Loading {loading} />
 
-<a href="/">Editor</a>
+<div class="{style.header}">
+    <a href="/">Editor</a>
+</div>
+<div class="{style.alert}  {style.warning}">
+    <div class="{style.title}">
+        <Icon name="alert-triangle" />
+        Waring
+    </div>
+    <div class="{style.content}">
+        Visibilty has no effect for now, changing it won't prevent anyone you give the link of post from seeing it.
+    </div>
+</div>
 <div class="posts">
     {#each data.posts as post}
         <div class="post">

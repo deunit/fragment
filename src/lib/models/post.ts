@@ -25,7 +25,9 @@ export default class Post {
     static async create(input: Omit<z.infer<typeof Post.createInput>, 'posted' | 'public'>) {
         const object: z.infer<typeof Post.createInput> & { slug: string } = {
             ...Post.createInput.parse(input),
-            slug: `${slugify(input.title)}-${nanoid(3)}`,
+            slug: `${slugify(input.title,{
+                remove: /[*+~.()'"!:@?]/g
+            })}-${nanoid(3)}`,
         };
         const result = await deta.Base("posts").put(object);
         console.log(result);

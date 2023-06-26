@@ -1,3 +1,5 @@
+@import "https://unpkg.com/open-props";
+
 .button {
     background: inherit;
     border: 2px solid black;
@@ -11,11 +13,50 @@
     will-change: translate, scale;
     backface-visibility: hidden;
     color: inherit;
-    text-decoration: none;    
-    &:active{
+    text-decoration: none;
+    &:active {
         --sx: 1px;
         --sy: 1px;
         translate: 2px 2px;
     }
+}
 
+.alert {
+    --title: var(--red-8);
+    --bg: var(--red-1);
+    --border: var(--red-3);
+    --content: var(--red-12);
+
+    &.warning {
+        --title: var(--yellow-8);
+        --bg: var(--yellow-1);
+        --border: var(--yellow-3);
+        --content: var(--yellow-12)
+    }
+
+    background: var(--bg);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    border-radius: var(--radius-2);
+    border: 1px solid var(--border);
+    gap: 1rem;
+
+    & > .title {
+        color: var(--title);
+        font-size: large;
+        font-weight: bold;
+    }
+
+    & > .content{
+        color: var(--content);
+    }
+}
+
+
+.header{
+    padding: 1rem;
+    display: flex;
+    align-items: center;
 }
