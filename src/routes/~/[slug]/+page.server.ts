@@ -3,15 +3,20 @@ import Post, { NotFoundError } from "$lib/models/post";
 
 export const load: ServerLoad = async (event) => {
     try {
+        const u = new URL(event.url);
+        u.pathname = "/";
+
         const slug = event.params.slug as string;
         const post = await Post.get(slug);
-        return { post };
+        return {
+            post,
+        };
     } catch (e) {
         if (e instanceof NotFoundError) {
             throw error(404, {
                 message: "Not Found",
-                code: 404
-            })
+                code: 404,
+            });
         } else {
             //@ts-ignore
             throw error(500, e.message);

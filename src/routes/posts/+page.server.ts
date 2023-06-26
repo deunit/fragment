@@ -1,10 +1,11 @@
-import { deta } from "$lib/db";
+import { IsAppOwner, deta } from "$lib/db";
 import Post from "$lib/models/post";
 import type { Actions, ServerLoad } from "@sveltejs/kit";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
 export const load: ServerLoad = async (event) => {
+   
     return {
         posts: (await deta.Base("posts").fetch()).items
             .map((i) => Post.schema.parse(i))
