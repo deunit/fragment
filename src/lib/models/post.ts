@@ -47,4 +47,11 @@ export default class Post {
             return Post.schema.parse(result.items.at(0))
         }
     }
+
+    static async update(key: string, data: Partial<z.infer<typeof Post.schema>>){
+        const result = await deta.Base("posts").update(data, key)
+        return result
+    }
+
+
 }

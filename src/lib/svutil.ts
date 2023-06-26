@@ -64,8 +64,8 @@ function insertAfter(referenceNode: Element, newNode: Element) {
 
 
 
-export async function IsAppOwner(url: URL | string) {
-    const result = await fetch(url, {
+export async function IsAppOwner(url: URL | string, fetcher = fetch) {
+    const result = await fetcher(url, {
         redirect: "follow",
     });
     return new URL(result.url).host === new URL(url).host && result.ok;

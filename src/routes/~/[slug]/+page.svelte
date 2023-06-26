@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import type { PageData, PageServerData } from "./$types";
     import { page } from "$app/stores";
-    import { IsAppOwner } from "$lib/svutil";
-    import { browser } from "$app/environment";
+    import style from '$lib/style/elements.module.scss'
+
+    
 
     const rootUrl = new URL($page.url);
     rootUrl.pathname = "/";
@@ -15,7 +15,7 @@
     {#if data.isOwner}
         <div />
         <div>
-            <button>Edit</button>
+            <a href="/edit/{data.post.slug}" class="{style.button}">Edit</a>
         </div>
     {/if}
 </div>

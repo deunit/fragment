@@ -2,7 +2,7 @@
     //@ts-ignore
     import ToolBar from "typewriter-editor/lib/Toolbar.svelte";
     import { onMount } from "svelte";
-    import Icon from "../lib/icon.svelte";
+    import Icon from "$lib/icon.svelte";
     import asRoot from "typewriter-editor/lib/asRoot";
     import { enhance } from "$app/forms";
     import { goto } from "$app/navigation";
@@ -10,8 +10,18 @@
     import { clickOutside, validify } from "$lib/svutil";
     import newEditor from "$lib/editor";
     import Dropdown from "$lib/components/dropdown.svelte";
-    import style from '$lib/style/elements.module.scss'
-    
+    import style from "$lib/style/elements.module.scss";
+    import { page } from "$app/stores";
+    import Loading from "$lib/components/loading.svelte";
+    import type { PageData, PageServerData } from "./$types";
+    import type { Editor } from "typewriter-editor";
+    import type { z } from "zod";
+    import type Post from "$lib/models/post";
+
+    export let data: PageData & {
+        post: z.infer<typeof Post.schema>;
+    };
+
     let pickerOpen = false;
 
     const colors = [
@@ -48,14 +58,23 @@
     let root: HTMLDivElement;
 
     onMount(() => {
-        editor = newEditor();
-        queueMicrotask(() => editor.root.focus());
+        editor = newEditor() as Editor;
+        queueMicrotask(() => {
+            editor.setHTML(data.post.content);
+            editor.root.focus();
+            editor.root.addEventListener("keydown", () => {
+                window.scrollTo({
+                    behavior: "instant",
+                    left: 0,
+                    top: 9999e9,
+                });
+            });
+        });
     });
 </script>
 
-{#if loading}
-    <div out:fly in:fly class="loading">LOADING</div>
-{/if}
+<Loading {loading} />
+
 {#if editor}
     <article class="content">
         <a href="/posts">Posts</a>
@@ -66,26 +85,37 @@
                 form="f"
                 name="title"
                 placeholder="Title"
+                value={data.post.title}
                 class="title"
                 use:validify={"Enter a title"}
             />
             <form
                 method="post"
-                action="?/create"
-                use:enhance={({ formData, formElement }) => {
+                action="?/save"
+                use:enhance={({ formData, formElement, cancel }) => {
+                    if (
+                        data.post.content === editor.getHTML() &&
+                        data.post.title === formData.get("title")
+                    ) {
+                        //same data prevent next
+                        cancel();
+                        alert("no need");
+                        return;
+                    }
                     loading = true;
                     formData.set("content", editor.getHTML());
                     return (o) => {
                         loading = false;
                         if (o.result.type === "success") {
                             //@ts-ignore
-                            goto(`/~/${o.result.data.slug}`);
+                            goto(`/~/${data.post.slug}`);
                         }
                     };
                 }}
                 id="f"
             >
-                <button class="{style.button}">Publish</button>
+                <input type="text" name="key" value="{data.post.key}" hidden>
+                <button class={style.button}>Save</button>
             </form>
         </div>
         <ToolBar {editor} let:commands let:active>
@@ -262,8 +292,6 @@
         overflow-x: auto;
         gap: 1rem;
     }
-
-   
 
     .loading {
         position: fixed;
