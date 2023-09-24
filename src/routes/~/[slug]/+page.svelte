@@ -1,9 +1,7 @@
 <script lang="ts">
     import type { PageData, PageServerData } from "./$types";
     import { page } from "$app/stores";
-    import style from '$lib/style/elements.module.scss'
-
-    
+    import style from "$lib/style/elements.module.scss";
 
     const rootUrl = new URL($page.url);
     rootUrl.pathname = "/";
@@ -11,11 +9,11 @@
     export let data: PageServerData & PageData;
 </script>
 
-<div class="{style.header}">
+<div class="{style.header} hola">
     {#if data.isOwner}
         <div />
         <div>
-            <a href="/edit/{data.post.slug}" class="{style.button}">Edit</a>
+            <a href="/edit/{data.post.slug}" class={style.button}>Edit</a>
         </div>
     {/if}
 </div>
@@ -33,5 +31,7 @@
         font-weight: 400;
     }
 
-   
+    :global(.hola) {
+        background: red;
+    }
 </style>

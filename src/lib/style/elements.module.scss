@@ -31,7 +31,7 @@
         --title: var(--yellow-8);
         --bg: var(--yellow-1);
         --border: var(--yellow-3);
-        --content: var(--yellow-12)
+        --content: var(--yellow-12);
     }
 
     background: var(--bg);
@@ -49,14 +49,14 @@
         font-weight: bold;
     }
 
-    & > .content{
+    & > .content {
         color: var(--content);
     }
 }
 
-
-.header{
+.header {
     padding: 1rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }

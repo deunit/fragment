@@ -2,10 +2,9 @@
 v: 0
 icon: tinypost.png
 micros:
-  - name: main
-    src: ./
-    engine: svelte-kit
-    primary: true
-    public_routes: [
-      "/~/*"
-    ]
+    - name: main
+      src: ./
+      engine: svelte-kit
+      primary: true
+      public_routes: ["/~/*"]
+      dev: bun dev
